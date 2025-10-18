@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulasi TKA Bahasa Indonesia</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .instructions {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--secondary);
+        }
+        
+        .instructions h2 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+        
+        .user-info {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+        }
+        
+        .user-info h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .timer-container {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .timer {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: var(--secondary);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .questions-section {
+            display: none;
+        }
+        
+        .question-container {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+        
+        .question-number {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .question-type {
+            background-color: var(--secondary);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        
+        .question-text {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .options {
+            margin-left: 20px;
+        }
+        
+        .option {
+            margin-bottom: 12px;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .option:hover {
+            background-color: #f0f8ff;
+        }
+        
+        .option input {
+            margin-right: 10px;
+        }
+        
+        .reading-passage {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .passage-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-secondary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #1a252f;
+        }
+        
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #27ae60;
+        }
+        
+        .btn-disabled {
+            background-color: #bdc3c7;
+            color: #7f8c8d;
+            cursor: not-allowed;
+        }
+        
+        .result-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-top: 30px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            display: none;
+        }
+        
+        .score-display {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--secondary);
+            margin: 20px 0;
+        }
+        
+        .score-text {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .explanation {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: left;
+            display: none;
+        }
+        
+        .explanation-title {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .correct-answer {
+            color: var(--success);
+            font-weight: bold;
+        }
+        
+        .user-correct {
+            background-color: #d4edda;
+            border-left: 4px solid var(--success);
+        }
+        
+        .user-incorrect {
+            background-color: #f8d7da;
+            border-left: 4px solid var(--accent);
+        }
+        
+        .validation-message {
+            background-color: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--warning);
+            display: none;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .mind-map {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .mind-map-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .mind-map-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .mind-map-item {
+            background-color: white;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+        }
+        
+        .mcma-option {
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .mcma-option input {
+            margin-top: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .question-container {
+                padding: 15px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Simulasi TKA Bahasa Indonesia</h1>
+            <p class="subtitle">Tes Kemampuan Akademik - 25 Soal Berstandar Kemendikbudristek</p>
+        </header>
+        
+        <section class="instructions">
+            <h2>Petunjuk Pengerjaan</h2>
+            <ul>
+                <li>Simulasi ini terdiri dari <strong>25 soal pilihan ganda</strong> dengan tingkat kesulitan beragam.</li>
+                <li>Waktu pengerjaan: <strong>45 menit</strong>.</li>
+                <li>Terdapat tiga jenis soal: Pilihan Ganda Biasa, Multiple Correct Answer, dan Benar/Salah.</li>
+                <li>Pilihlah jawaban yang paling tepat dengan mengklik opsi yang tersedia.</li>
+                <li>Anda <strong>harus menjawab semua soal</strong> sebelum dapat mengumpulkan dan melihat hasil.</li>
+                <li>Setelah selesai, klik tombol <strong>"Kumpulkan & Lihat Nilai"</strong> untuk melihat hasil dan pembahasan.</li>
+                <li>Nilai akan dihitung secara otomatis dengan rumus: <strong>(Jumlah Benar / 25) × 100</strong>.</li>
+            </ul>
+        </section>
+        
+        <div class="user-info">
+            <h2>Data Peserta</h2>
+            <div class="form-group">
+                <label for="nama">Nama Lengkap</label>
+                <input type="text" id="nama" placeholder="Masukkan nama lengkap Anda">
+            </div>
+            <div class="form-group">
+                <label for="kelas">Kelas</label>
+                <input type="text" id="kelas" placeholder="Contoh: XII IPA 2 / XII TKJ 1">
+            </div>
+            <button id="start-btn" class="btn-primary">Mulai Tes</button>
+        </div>
+        
+        <div class="validation-message" id="validation-message">
+            Anda harus menjawab semua soal sebelum dapat melihat hasil. Silakan periksa kembali jawaban Anda.
+        </div>
+        
+        <div class="timer-container" id="timer-container">
+            <div>
+                <strong>Waktu Tersisa:</strong>
+                <span class="timer" id="timer">45:00</span>
+            </div>
+            <div>
+                <strong>Soal:</strong>
+                <span id="current-question">1</span> / <span id="total-questions">25</span>
+            </div>
+        </div>
+        
+        <div class="progress-bar" id="progress-bar-container">
+            <div class="progress" id="progress-bar"></div>
+        </div>
+        
+        <div class="questions-section" id="questions-section">
+            <!-- Soal akan dimuat di sini melalui JavaScript -->
+        </div>
+        
+        <div class="navigation" id="navigation-buttons">
+            <button id="prev-btn" class="btn-secondary">Soal Sebelumnya</button>
+            <button id="next-btn" class="btn-primary">Soal Berikutnya</button>
+            <button id="submit-btn" class="btn-disabled" disabled>Kumpulkan & Lihat Nilai</button>
+        </div>
+        
+        <div class="result-container" id="result-container">
+            <h2>Hasil Simulasi TKA Bahasa Indonesia</h2>
+            <div id="user-details"></div>
+            <div class="score-display" id="score-display">0</div>
+            <div class="score-text" id="score-text"></div>
+            <button id="show-explanation" class="btn-primary">Lihat Pembahasan</button>
+        </div>
+        
+        <div class="explanation" id="explanation">
+            <h3 class="explanation-title">Pembahasan Jawaban</h3>
+            <div id="explanation-content">
+                <!-- Pembahasan akan dimuat di sini -->
+            </div>
+        </div>
+        
+        <footer>
+            <p>Simulasi TKA Bahasa Indonesia &copy; 2023 - Dirancang untuk persiapan ujian seleksi masuk PTN</p>
+        </footer>
+    </div>
+
+    <script>
+        // Data soal dan jawaban dengan tingkat kesulitan beragam
+        const questions = [
+            // SOAL MUDAH (30% = 8 soal)
+            {
+                type: "PG",
+                difficulty: "mudah",
+                passage: "",
+                question: "Kata yang penulisannya sesuai dengan EYD adalah...",
+                options: [
+                    "praktek",
+                    "praktek",
+                    "praktik",
+                    "praktic",
+                    "practic"
+                ],
+                correctAnswer: 2,
+                explanation: "Penulisan yang benar adalah 'praktik' sesuai dengan Pedoman Umum Ejaan Bahasa Indonesia (PUEBI)."
+            },
+            {
+                type: "PG",
+                difficulty: "mudah",
+                passage: "",
+                question: "Kalimat manakah yang menggunakan kata 'apabila' dengan tepat?",
+                options: [
+                    "Apabila kamu datang, saya akan pergi.",
+                    "Saya pergi apabila kamu datang.",
+                    "Apabila hujan turun, kita berteduh.",
+                    "Kita berteduh apabila hujan turun.",
+                    "Semua jawaban benar"
+                ],
+                correctAnswer: 4,
+                explanation: "Semua kalimat menggunakan kata 'apabila' dengan tepat sebagai kata penghubung syarat."
+            },
+            {
+                type: "PG",
+                difficulty: "mudah",
+                question: "Kata 'mengonsumsi' termasuk dalam jenis kata...",
+                options: [
+                    "Kata benda",
+                    "Kata kerja",
+                    "Kata sifat",
+                    "Kata keterangan",
+                    "Kata ganti"
+                ],
+                correctAnswer: 1,
+                explanation: "'Mengonsumsi' adalah kata kerja (verba) karena menunjukkan suatu aktivitas atau tindakan."
+            },
+            {
+                type: "BS",
+                difficulty: "mudah",
+                passage: "",
+                question: "Kalimat 'Dia pergi ke sekolah dengan bersepeda' merupakan kalimat yang efektif.",
+                options: [
+                    "Benar",
+                    "Salah"
+                ],
+                correctAnswer: 0,
+                explanation: "Kalimat tersebut sudah efektif karena tidak mengandung kata yang mubazir dan strukturnya sudah tepat."
+            },
+            {
+                type: "PG",
+                difficulty: "mudah",
+                passage: "",
+                question: "Imbuhan yang tepat untuk melengkapi kata '...lengkapi' dalam kalimat 'Silakan ...lengkapi data diri Anda' adalah...",
+                options: [
+                    "me-",
+                    "memper-",
+                    "di-",
+                    "ter-",
+                    "ber-"
+                ],
+                correctAnswer: 0,
+                explanation: "Imbuhan yang tepat adalah 'me-' sehingga menjadi 'melengkapi' yang merupakan bentuk aktif."
+            },
+            {
+                type: "BS",
+                difficulty: "mudah",
+                passage: "",
+                question: "Kata 'analisis' dan 'analisa' kedua-duanya benar menurut EYD.",
+                options: [
+                    "Benar",
+                    "Salah"
+                ],
+                correctAnswer: 1,
+                explanation: "Menurut EYD, penulisan yang benar adalah 'analisis', bukan 'analisa'."
+            },
+            {
+                type: "PG",
+                difficulty: "mudah",
+                passage: `
+                    <div class="reading-passage">
+                        <div class="passage-title">Bacaan Singkat</div>
+                        <p>Pemerintah berencana membangun taman bacaan masyarakat di setiap kelurahan. Taman bacaan ini diharapkan dapat meningkatkan minat baca masyarakat, terutama anak-anak. Dana pembangunan akan diambil dari anggaran pendidikan daerah.</p>
+                    </div>
+                `,
+                question: "Ide pokok bacaan tersebut adalah...",
+                options: [
+                    "Minat baca anak-anak yang rendah",
+                    "Anggaran pendidikan daerah",
+                    "Pembangunan taman bacaan masyarakat",
+                    "Peningkatan kualitas pendidikan",
+                    "Peran pemerintah dalam pendidikan"
+                ],
+                correctAnswer: 2,
+                explanation: "Ide pokok bacaan adalah rencana pembangunan taman bacaan masyarakat oleh pemerintah."
+            },
+            {
+                type: "PG",
+                difficulty: "mudah",
+                passage: "",
+                question: "Kalimat manakah yang menggunakan tanda baca dengan benar?",
+                options: [
+                    "Ibu membeli: beras, gula, dan minyak.",
+                    "Ibu membeli beras, gula dan minyak.",
+                    "Ibu membeli beras, gula, dan minyak.",
+                    "Ibu membeli; beras, gula, dan minyak.",
+                    "Ibu membeli beras gula dan minyak."
+                ],
+                correctAnswer: 2,
+                explanation: "Kalimat yang menggunakan tanda baca dengan benar adalah 'Ibu membeli beras, gula, dan minyak.' dengan penggunaan koma yang tepat sebelum kata 'dan'."
+            },
+            
+            // SOAL SEDANG (40% = 10 soal)
+            {
+                type: "PG",
+                difficulty: "sedang",
+                passage: `
+                    <div class="reading-passage">
+                        <div class="passage-title">Teks Eksposisi</div>
+                        <p>Literasi digital menjadi kebutuhan mendesak di era teknologi informasi. Kemampuan ini tidak hanya sekadar mampu mengoperasikan perangkat digital, tetapi juga mencakup pemahaman dalam menyeleksi informasi, menganalisis konten, dan menggunakan teknologi secara bertanggung jawab. Sayangnya, berdasarkan survei terbaru, indeks literasi digital masyarakat Indonesia masih berada pada tingkat menengah ke bawah. Hal ini menjadi tantangan serius mengingat arus informasi yang begitu deras di ruang digital.</p>
+                    </div>
+                `,
+                question: "Pernyataan yang sesuai dengan isi teks adalah...",
+                options: [
+                    "Literasi digital hanya tentang kemampuan mengoperasikan perangkat digital.",
+                    "Indeks literasi digital masyarakat Indonesia sudah sangat tinggi.",
+                    "Literasi digital mencakup kemampuan menyeleksi dan menganalisis informasi.",
+                    "Tidak ada tantangan serius dalam literasi digital di Indonesia.",
+                    "Era teknologi informasi tidak memengaruhi kebutuhan literasi digital."
+                ],
+                correctAnswer: 2,
+                explanation: "Teks menyatakan bahwa literasi digital mencakup pemahaman dalam menyeleksi informasi, menganalisis konten, dan menggunakan teknologi secara bertanggung jawab."
+            },
+            {
+                type: "MCMA",
+                difficulty: "sedang",
+                passage: `
+                    <div class="reading-passage">
+                        <div class="passage-title">Teks Persuasi tentang Lingkungan</div>
+                        <p>Marilah kita bersama-sama menjaga kelestarian lingkungan. Setiap tindakan kecil yang kita lakukan dapat memberikan dampak besar bagi bumi. Mulailah dengan mengurangi penggunaan plastik sekali pakai, memilah sampah, dan menanam pohon di sekitar rumah. Lingkungan yang sehat akan memberikan manfaat bagi kita semua, termasuk udara yang bersih dan sumber air yang terjaga. Ayo, kita wujudkan bumi yang lebih hijau untuk generasi mendatang!</p>
+                    </div>
+                `,
+                question: "Berdasarkan teks, manakah tindakan yang disarankan untuk menjaga kelestarian lingkungan?",
+                options: [
+                    "Mengurangi penggunaan plastik sekali pakai",
+                    "Meningkatkan konsumsi bahan bakar fosil",
+                    "Memilah sampah",
+                    "Menebang pohon untuk pembangunan",
+                    "Menanam pohon di sekitar rumah"
+                ],
+                correctAnswer: [0, 2, 4],
+                explanation: "Teks menyebutkan tiga tindakan yang disarankan: mengurangi penggunaan plastik sekali pakai, memilah sampah, dan menanam pohon di sekitar rumah."
+            },
+            {
+                type: "PG",
+                difficulty: "sedang",
+                passage: "",
+                question: "Kalimat manakah yang mengandung majas personifikasi?",
+                options: [
+                    "Wajahnya pucat seperti mayat.",
+                    "Angin berbisik menyampaikan salam.",
+                    "Dia setinggi pohon kelapa.",
+                    "Rumah itu besar bagai istana.",
+                    "Suaranya merdu seperti buluh perindu."
+                ],
+                correctAnswer: 1,
+                explanation: "'Angin berbisik menyampaikan salam' adalah contoh majas personifikasi karena memberikan sifat manusia (berbisik) kepada angin yang bukan manusia."
+            },
+            {
+                type: "BS",
+                difficulty: "sedang",
+                passage: `
+                    <div class="reading-passage">
+                        <div class="passage-title">Kutipan Cerpen</div>
+                        <p>Dengan langkah gontai, ia menyusuri jalan setapak menuju rumah. Pikirannya melayang kepada kejadian siang tadi. Betapa hancur hatinya ketika mengetahui kenyataan pahit itu. Namun, ia harus tetap kuat. Hari esok harus tetap dijalani dengan semangat baru.</p>
+                    </div>
+                `,
+                question: "Tokoh dalam kutipan cerpen tersebut sedang mengalami konflik batin.",
+                options: [
+                    "Benar",
+                    "Salah"
+                ],
+                correctAnswer: 0,
+                explanation: "Berdasarkan kutipan, tokoh sedang mengalami konflik batin yang ditunjukkan dengan 'Pikirannya melayang kepada kejadian siang tadi' dan 'Betapa hancur hatinya'."
+            },
+            {
+                type: "PG",
+                difficulty: "sedang",
+                passage: `
+                    <div class="mind-map">
+                        <div class="mind-map-title">Peta Konsep: Jenis-Jenis Teks</div>
+                        <div class="mind-map-content">
+                            <div class="mind-map-item">Teks Eksposisi</div>
+                            <div class="mind-map-item">Teks Deskripsi</div>
+                            <div class="mind-map-item">Teks Narasi</div>
+                            <div class="mind-map-item">Teks Persuasi</div>
+                            <div class="mind-map-item">Teks Prosedur</div>
+                        </div>
+                    </div>
+                `,
+                question: "Berdasarkan peta konsep di atas, teks yang bertujuan memengaruhi pembaca termasuk dalam jenis...",
+                options: [
+                    "Teks Eksposisi",
+                    "Teks Deskripsi",
+                    "Teks Narasi",
+                    "Teks Persuasi",
+                    "Teks Prosedur"
+                ],
+                correctAnswer: 3,
+                explanation: "Teks persuasi adalah teks yang bertujuan memengaruhi pembaca untuk melakukan atau mempercayai sesuatu."
+            },
+            {
+                type: "MCMA",
+                difficulty: "sedang",
+                passage: "",
+                question: "Manakah di antara kalimat berikut yang merupakan kalimat efektif?",
+                options: [
+                    "Dia pergi ke sekolah dengan menggunakan sepeda.",
+                    "Para hadirin dimohon untuk berdiri.",
+                    "Buku itu dibaca oleh saya.",
+                    "Kami saling pukul-memukul dalam pertandingan itu.",
+                    "Acara itu dihadiri oleh para tamu undangan."
+                ],
+                correctAnswer: [0, 1],
+                explanation: "Kalimat 'Dia pergi ke sekolah dengan menggunakan sepeda' dan 'Para hadirin dimohon untuk berdiri' adalah kalimat efektif. Kalimat lainnya mengandung kata yang mubazir atau struktur yang tidak efektif."
+            },
+            {
+                type: "PG",
+                difficulty: "sedang",
+                passage: `
+                    <div class="reading-passage">
+                        <div class="passage-title">Teks Laporan Hasil Observasi</div>
+                        <p>Perpustakaan sekolah kami memiliki koleksi sekitar 5.000 buku yang terbagi dalam berbagai kategori. Kategori fiksi merupakan yang paling banyak diminati dengan persentase peminjaman mencapai 45%. Diikuti oleh kategori ilmu pengetahuan (25%), sejarah (15%), dan lainnya (15%). Pengunjung perpustakaan didominasi oleh siswa kelas X dan XI dengan rata-rata 150 pengunjung per hari.</p>
+                    </div>
+                `,
+                question: "Berdasarkan teks laporan tersebut, pernyataan manakah yang benar?",
+                options: [
+                    "Kategori sejarah paling banyak diminati.",
+                    "Siswa kelas XII paling banyak mengunjungi perpustakaan.",
+                    "Kategori fiksi paling banyak dipinjam.",
+                    "Terdapat 10.000 buku di perpustakaan.",
+                    "Rata-rata pengunjung perpustakaan 200 orang per hari."
+                ],
+                correctAnswer: 2,
+                explanation: "Teks menyatakan bahwa 'Kategori fiksi merupakan yang paling banyak diminati dengan persentase peminjaman mencapai 45%'."
+            },
+            {
+                type: "BS",
+                difficulty: "sedang",
+                passage: `
+                    <div class="reading-passage">
+                        <div class="passage-title">Kutipan Novel</div>
+                        <p>"Kau tidak perlu khawatir," katanya sambil tersenyum. "Semua akan baik-baik saja. Percayalah padaku." Aku mengangguk pelan, mencoba menelan rasa khawatir yang mengganjal di dada. Kata-katanya memang menenangkan, tetapi hatiku masih diliputi keraguan.</p>
+                    </div>
+                `,
+                question: "Dalam kutipan novel tersebut, tokoh 'aku' merasa sangat tenang dan yakin.",
+                options: [
+                    "Benar",
+                    "Salah"
+                ],
+                correctAnswer: 1,
+                explanation: "Tokoh 'aku' justru diliputi keraguan meskipun kata-kata tokoh lain menenangkan, seperti disebutkan: 'hatiku masih diliputi keraguan'."
+            },
+            {
+                type: "PG",
+                difficulty: "sedang",
+                passage: `
+                    <div class="mind-map">
+                        <div class="mind-map-title">Peta Konsep: Unsur Intrinsik Cerpen</div>
+                        <div class="mind-map-content">
+                            <div class="mind-map-item">Tema</div>
+                            <div class="mind-map-item">Tokoh dan Penokohan</div>
+                            <div class="mind-map-item">Alur</div>
+                            <div class="mind-map-item">Latar</div>
+                            <div class="mind-map-item">Sudut Pandang</div>
+                            <div class="mind-map-item">Amanat</div>
+                        </div>
+                    </div>
+                `,
+                question: "Berdasarkan peta konsep di atas, unsur intrinsik yang berkaitan dengan tempat dan waktu terjadinya cerita adalah...",
+                options: [
+                    "Tema",
+                    "Tokoh dan Penokohan",
+                    "Alur",
+                    "Latar",
+                    "Sudut Pandang"
+                ],
+                correctAnswer: 3,
+                explanation: "Latar (setting) adalah unsur intrinsik yang berkaitan dengan tempat, waktu, dan suasana terjadinya cerita."
+            },
+            {
+                type: "PG",
+                difficulty: "sedang",
+                passage: "",
+                question: "Kata yang mengalami penyempitan makna (spesialisasi) adalah...",
+                options: [
+                    "Sastra (dari bahasa Sansekerta 'sastra' yang berarti tulisan, kini berarti karya seni bahasa)",
+                    "Berdusta (dari bahasa Sanskerta 'dusta' yang berarti salah, kini berarti berkata tidak jujur)",
+                    "Korban (dari bahasa Sanskerta 'korban' yang berarti persembahan, kini berarti orang yang menderita)",
+                    "Sarjana (dari bahasa Sanskerta 'sarjana' yang berarti orang pandai, kini berarti lulusan perguruan tinggi)",
+                    "Semua jawaban benar"
+                ],
+                correctAnswer: 4,
+                explanation: "Semua kata tersebut mengalami penyempitan makna (spesialisasi) dari makna yang lebih umum ke makna yang lebih khusus."
+            },
+            
+            // SOAL SULIT (30% = 7 soal)
+            {
+                type: "PG",
+                difficulty: "sulit",
+                passage: `
+                    <div class="reading-passage">
+                        <div class="passage-title">Teks Editorial</div>
+                        <p>Kebijakan full day school yang diterapkan di beberapa sekolah menuai pro dan kontra. Di satu sisi, kebijakan ini dianggap dapat memaksimalkan waktu belajar siswa dan mengurangi waktu yang terbuang untuk hal-hal tidak produktif. Di sisi lain, kebijakan ini dikhawatirkan akan mengurangi waktu istirahat anak dan kesempatan untuk mengembangkan diri di luar akademik. Sebagai solusi kompromi, mungkin perlu dipertimbangkan sistem yang lebih fleksibel dengan mempertimbangkan kebutuhan perkembangan anak secara holistik, tidak hanya dari aspek kognitif semata.</p>
+                    </div>
+                `,
+                question: "Simpulan yang tepat untuk teks editorial tersebut adalah...",
+                options: [
+                    "Full day school adalah kebijakan yang harus didukung sepenuhnya.",
+                    "Full day school adalah kebijakan yang harus ditolak mentah-mentah.",
+                    "Full day school perlu dievaluasi dengan mempertimbangkan kebutuhan holistik anak.",
+                    "Full day school hanya berfokus pada aspek kognitif anak.",
+                    "Full day school tidak memiliki dampak positif sama sekali."
+                ],
+                correctAnswer: 2,
+                explanation: "Simpulan yang tepat adalah 'Full day school perlu dievaluasi dengan mempertimbangkan kebutuhan holistik anak' karena teks menawarkan solusi kompromi dengan mempertimbangkan kebutuhan perkembangan anak secara holistik."
+            },
+            {
+                type: "MCMA",
+                difficulty: "sulit",
+                passage: `
+                    <div class="reading-passage">
+                        <div class="passage-title">Teks Kritik Sastra</div>
+                        <p>Novel 'Laskar Pelangi' karya Andrea Hirata tidak hanya sukses secara komersial tetapi juga menuai pujian dari kritikus sastra. Novel ini dinilai berhasil menggambarkan realitas pendidikan di Belitung dengan sentuhan nostalgia yang kental. Penggunaan bahasa yang renyah dan dialog yang hidup membuat pembaca seolah-olah terlibat langsung dalam cerita. Namun, beberapa kritikus menilai novel ini terlalu sentimentil dan kurang memberikan ruang untuk kritik sosial yang mendalam. Meskipun demikian, kelebihan novel ini jauh lebih menonjol daripada kekurangannya.</p>
+                    </div>
+                `,
+                question: "Berdasarkan teks kritik sastra tersebut, manakah pernyataan yang benar tentang novel 'Laskar Pelangi'?",
+                options: [
+                    "Hanya sukses secara komersial",
+                    "Menuai pujian dari kritikus sastra",
+                    "Gagal menggambarkan realitas pendidikan",
+                    "Penggunaan bahasa yang renyah dan dialog yang hidup",
+                    "Terlalu sentimentil menurut beberapa kritikus"
+                ],
+                correctAnswer: [1, 3, 4],
+                explanation: "Teks menyatakan bahwa novel 'menuai pujian dari kritikus sastra', memiliki 'penggunaan bahasa yang renyah dan dialog yang hidup', dan 'terlalu sentimentil menurut beberapa kritikus'."
+            },
+            {
+                type: "PG",
+                difficulty: "sulit",
+                passage: "",
+                question: "Kalimat manakah yang menggunakan kata penghubung (konjungsi) korelatif dengan tepat?",
+                options: [
+                    "Baik saya maupun dia tidak akan datang ke pesta itu.",
+                    "Saya tidak akan datang ke pesta itu, baik maupun dia.",
+                    "Baik saya tidak akan datang ke pesta itu maupun dia.",
+                    "Saya tidak akan datang, baik ke pesta itu maupun dia.",
+                    "Baik saya maupun dia, tidak akan datang ke pesta itu."
+                ],
+                correctAnswer: 0,
+                explanation: "Kalimat 'Baik saya maupun dia tidak akan datang ke pesta itu' menggunakan konjungsi korelatif 'baik...maupun...' dengan tepat dan penempatan yang benar."
+            },
+            {
+                type: "BS",
+                difficulty: "sulit",
+                passage: `
+                    <div class="reading-passage">
+                        <div class="passage-title">Kutipan Puisi</div>
+                        <p>Dalam hening malam<br>
+                        Kutatap bintang-bintang<br>
+                        Berkelip di langit gelap<br>
+                        Seperti harapan yang tak pernah padam<br><br>
+                        
+                        Di balik awan kelam<br>
+                        Terbayang wajahmu<br>
+                        Yang pergi tanpa pesan<br>
+                        Tinggalkan lara yang tak terucap</p>
+                    </div>
+                `,
+                question: "Puisi tersebut menggunakan majas metafora pada baris 'Seperti harapan yang tak pernah padam'.",
+                options: [
+                    "Benar",
+                    "Salah"
+                ],
+                correctAnswer: 1,
+                explanation: "Baris 'Seperti harapan yang tak pernah padam' menggunakan majas simile, bukan metafora, karena menggunakan kata 'seperti' untuk membandingkan bintang dengan harapan."
+            },
+            {
+                type: "PG",
+                difficulty: "sulit",
+                passage: `
+                    <div class="reading-passage">
+                        <div class="passage-title">Teks Debat</div>
+                        <p>Pihak afirmatif: "Penggunaan gadget di sekolah seharusnya dibatasi karena dapat mengganggu konsentrasi belajar siswa. Banyak penelitian menunjukkan bahwa adanya gadget di kelas membuat siswa lebih mudah teralih perhatiannya."<br><br>
+                        
+                        Pihak oposisi: "Saya tidak setuju. Justru gadget dapat menjadi alat pembelajaran yang efektif jika digunakan dengan tepat. Guru dapat memanfaatkannya untuk mencari informasi aktual dan membuat pembelajaran lebih interaktif."</p>
+                    </div>
+                `,
+                question: "Berdasarkan teks debat tersebut, pernyataan manakah yang mewakili argumen pihak oposisi?",
+                options: [
+                    "Gadget mengganggu konsentrasi belajar siswa",
+                    "Gadget harus dilarang sepenuhnya di sekolah",
+                    "Gadget dapat menjadi alat pembelajaran yang efektif",
+                    "Tidak ada manfaat gadget dalam pembelajaran",
+                    "Penelitian mendukung pembatasan gadget di sekolah"
+                ],
+                correctAnswer: 2,
+                explanation: "Pihak oposisi berargumen bahwa 'gadget dapat menjadi alat pembelajaran yang efektif jika digunakan dengan tepat'."
+            },
+            {
+                type: "MCMA",
+                difficulty: "sulit",
+                passage: `
+                    <div class="reading-passage">
+                        <div class="passage-title">Teks Eksplanasi Kompleks</div>
+                        <p>Revolusi Industri 4.0 telah mengubah paradigma pendidikan secara fundamental. Kecerdasan buatan (AI), internet of things (IoT), dan big data tidak hanya mengubah cara kita bekerja tetapi juga cara kita belajar. Pendidikan kini tidak lagi terbatas pada ruang kelas fisik, tetapi dapat diakses secara daring dari mana saja. Namun, tantangan terbesar adalah kesenjangan digital yang masih lebar antara daerah perkotaan dan pedesaan. Selain itu, pendidikan karakter menjadi semakin penting di era diasiswa informasi ini untuk membentuk generasi yang tidak hanya cerdas secara kognitif tetapi juga memiliki integritas moral.</p>
+                    </div>
+                `,
+                question: "Berdasarkan teks eksplanasi tersebut, manakah pernyataan yang benar tentang dampak Revolusi Industri 4.0 terhadap pendidikan?",
+                options: [
+                    "Mengubah paradigma pendidikan secara fundamental",
+                    "Membatasi akses pendidikan hanya di ruang kelas fisik",
+                    "Menghilangkan pentingnya pendidikan karakter",
+                    "Menghadapi tantangan kesenjangan digital",
+                    "Tidak memengaruhi cara belajar"
+                ],
+                correctAnswer: [0, 3],
+                explanation: "Teks menyatakan bahwa Revolusi Industri 4.0 'telah mengubah paradigma pendidikan secara fundamental' dan menghadapi 'tantangan kesenjangan digital yang masih lebar'."
+            },
+            {
+                type: "PG",
+                difficulty: "sulit",
+                passage: "",
+                question: "Kalimat manakah yang menggunakan pola kalimat inversi dengan tepat?",
+                options: [
+                    "Pergilah ia tanpa pamit kepada siapa pun.",
+                    "Dengan cepatnya berlari anak itu mengejar bus.",
+                    "Di meja itu terletak buku-buku tua yang berharga.",
+                    "Sedang menyanyi kakak di kamar dengan merdu.",
+                    "Semalam hujan turun dengan lebatnya."
+                ],
+                correctAnswer: 2,
+                explanation: "Kalimat 'Di meja itu terletak buku-buku tua yang berharga' menggunakan pola inversi yang tepat dengan menempatkan keterangan tempat di awal kalimat diikuti predikat dan subjek."
+            }
+        ];
+
+        // Variabel global
+        let currentQuestion = 0;
+        let userAnswers = new Array(questions.length).fill(null);
+        let timer;
+        let timeLeft = 45 * 60; // 45 menit dalam detik
+
+        // Fungsi untuk memulai tes
+        function startTest() {
+            const nama = document.getElementById('nama').value.trim();
+            const kelas = document.getElementById('kelas').value.trim();
+            
+            if (!nama || !kelas) {
+                alert('Harap isi nama lengkap dan kelas terlebih dahulu!');
+                return;
+            }
+            
+            // Sembunyikan form user info
+            document.querySelector('.user-info').style.display = 'none';
+            
+            // Tampilkan timer, progress bar, dan soal
+            document.getElementById('timer-container').style.display = 'flex';
+            document.getElementById('progress-bar-container').style.display = 'block';
+            document.getElementById('questions-section').style.display = 'block';
+            document.getElementById('navigation-buttons').style.display = 'flex';
+            
+            // Tampilkan soal pertama
+            displayQuestion();
+            
+            // Mulai timer
+            startTimer();
+            
+            // Inisialisasi status tombol submit
+            checkAllQuestionsAnswered();
+        }
+
+        // Fungsi untuk menampilkan soal
+        function displayQuestion() {
+            const container = document.getElementById('questions-section');
+            const question = questions[currentQuestion];
+            
+            // Update progress bar
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            
+            // Update nomor soal
+            document.getElementById('current-question').textContent = currentQuestion + 1;
+            
+            let html = `
+                <div class="question-container">
+                    <div class="question-number">
+                        <span>Soal ${currentQuestion + 1} <small>(${question.difficulty})</small></span>
+                        <span class="question-type">${getQuestionTypeLabel(question.type)}</span>
+                    </div>
+            `;
+            
+            // Tambahkan bacaan jika ada
+            if (question.passage) {
+                html += question.passage;
+            }
+            
+            html += `
+                    <div class="question-text">${question.question}</div>
+                    <div class="options">
+            `;
+            
+            // Tambahkan opsi jawaban berdasarkan jenis soal
+            if (question.type === "PG" || question.type === "BS") {
+                // Untuk PG dan BS, gunakan radio button
+                question.options.forEach((option, index) => {
+                    const isChecked = userAnswers[currentQuestion] === index ? 'checked' : '';
+                    html += `
+                        <div class="option">
+                            <input type="radio" id="q${currentQuestion}o${index}" name="question${currentQuestion}" value="${index}" ${isChecked}>
+                            <label for="q${currentQuestion}o${index}">${question.type === "BS" ? option : String.fromCharCode(65 + index) + '. ' + option}</label>
+                        </div>
+                    `;
+                });
+            } else if (question.type === "MCMA") {
+                // Untuk MCMA, gunakan checkbox
+                question.options.forEach((option, index) => {
+                    const isChecked = userAnswers[currentQuestion] && userAnswers[currentQuestion].includes(index) ? 'checked' : '';
+                    html += `
+                        <div class="option mcma-option">
+                            <input type="checkbox" id="q${currentQuestion}o${index}" name="question${currentQuestion}" value="${index}" ${isChecked}>
+                            <label for="q${currentQuestion}o${index}">${String.fromCharCode(65 + index) + '. ' + option}</label>
+                        </div>
+                    `;
+                });
+            }
+            
+            html += `
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+            
+            // Tambahkan event listener untuk opsi
+            if (question.type === "PG" || question.type === "BS") {
+                document.querySelectorAll(`input[name="question${currentQuestion}"]`).forEach(input => {
+                    input.addEventListener('change', (e) => {
+                        userAnswers[currentQuestion] = parseInt(e.target.value);
+                        checkAllQuestionsAnswered();
+                    });
+                });
+            } else if (question.type === "MCMA") {
+                document.querySelectorAll(`input[name="question${currentQuestion}"]`).forEach(input => {
+                    input.addEventListener('change', (e) => {
+                        if (!userAnswers[currentQuestion]) {
+                            userAnswers[currentQuestion] = [];
+                        }
+                        
+                        const value = parseInt(e.target.value);
+                        if (e.target.checked) {
+                            if (!userAnswers[currentQuestion].includes(value)) {
+                                userAnswers[currentQuestion].push(value);
+                            }
+                        } else {
+                            userAnswers[currentQuestion] = userAnswers[currentQuestion].filter(item => item !== value);
+                        }
+                        
+                        checkAllQuestionsAnswered();
+                    });
+                });
+            }
+            
+            // Update status tombol navigasi
+            document.getElementById('prev-btn').disabled = currentQuestion === 0;
+        }
+
+        // Fungsi untuk mendapatkan label jenis soal
+        function getQuestionTypeLabel(type) {
+            switch(type) {
+                case "PG": return "Pilihan Ganda";
+                case "MCMA": return "Multiple Correct Answer";
+                case "BS": return "Benar/Salah";
+                default: return type;
+            }
+        }
+
+        // Fungsi untuk memeriksa apakah semua soal telah dijawab
+        function checkAllQuestionsAnswered() {
+            let allAnswered = true;
+            
+            for (let i = 0; i < questions.length; i++) {
+                if (userAnswers[i] === null) {
+                    allAnswered = false;
+                    break;
+                }
+                
+                // Untuk MCMA, pastikan array tidak kosong
+                if (questions[i].type === "MCMA" && userAnswers[i].length === 0) {
+                    allAnswered = false;
+                    break;
+                }
+            }
+            
+            const submitBtn = document.getElementById('submit-btn');
+            
+            if (allAnswered) {
+                submitBtn.classList.remove('btn-disabled');
+                submitBtn.classList.add('btn-success');
+                submitBtn.disabled = false;
+            } else {
+                submitBtn.classList.remove('btn-success');
+                submitBtn.classList.add('btn-disabled');
+                submitBtn.disabled = true;
+            }
+            
+            return allAnswered;
+        }
+
+        // Fungsi untuk memulai timer
+        function startTimer() {
+            timer = setInterval(() => {
+                timeLeft--;
+                
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                
+                document.getElementById('timer').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    submitQuiz();
+                }
+            }, 1000);
+        }
+
+        // Fungsi untuk mengumpulkan kuis dan menampilkan hasil
+        function submitQuiz() {
+            // Validasi apakah semua soal telah dijawab
+            if (!checkAllQuestionsAnswered()) {
+                document.getElementById('validation-message').style.display = 'block';
+                document.getElementById('validation-message').scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
+            
+            clearInterval(timer);
+            
+            // Hitung skor
+            let correctCount = 0;
+            questions.forEach((question, index) => {
+                if (question.type === "MCMA") {
+                    // Untuk MCMA, bandingkan array jawaban
+                    if (userAnswers[index] && 
+                        userAnswers[index].length === question.correctAnswer.length &&
+                        userAnswers[index].every(val => question.correctAnswer.includes(val))) {
+                        correctCount++;
+                    }
+                } else {
+                    // Untuk PG dan BS, bandingkan nilai
+                    if (userAnswers[index] === question.correctAnswer) {
+                        correctCount++;
+                    }
+                }
+            });
+            
+            const score = (correctCount / questions.length) * 100;
+            
+            // Tampilkan hasil
+            const nama = document.getElementById('nama').value;
+            const kelas = document.getElementById('kelas').value;
+            document.getElementById('user-details').innerHTML = `
+                <p><strong>Nama:</strong> ${nama} | <strong>Kelas:</strong> ${kelas}</p>
+            `;
+            document.getElementById('score-display').textContent = Math.round(score);
+            document.getElementById('score-text').textContent = 
+                `Anda menjawab ${correctCount} dari ${questions.length} soal dengan benar.`;
+            
+            document.getElementById('result-container').style.display = 'block';
+            
+            // Scroll ke hasil
+            document.getElementById('result-container').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Fungsi untuk menampilkan pembahasan
+        function showExplanation() {
+            let html = '';
+            
+            questions.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                let isCorrect = false;
+                
+                if (question.type === "MCMA") {
+                    isCorrect = userAnswer && 
+                               userAnswer.length === question.correctAnswer.length &&
+                               userAnswer.every(val => question.correctAnswer.includes(val));
+                } else {
+                    isCorrect = userAnswer === question.correctAnswer;
+                }
+                
+                const answerClass = isCorrect ? 'user-correct' : 'user-incorrect';
+                
+                html += `
+                    <div class="question-container ${answerClass}">
+                        <div class="question-number">
+                            <span>Soal ${index + 1} <small>(${question.difficulty})</small></span>
+                            <span>${isCorrect ? '✓ Benar' : '✗ Salah'}</span>
+                        </div>
+                `;
+                
+                if (question.passage) {
+                    html += question.passage;
+                }
+                
+                html += `
+                        <div class="question-text">${question.question}</div>
+                        <div class="options">
+                `;
+                
+                if (question.type === "PG" || question.type === "BS") {
+                    question.options.forEach((option, optIndex) => {
+                        let optionClass = '';
+                        if (optIndex === question.correctAnswer) {
+                            optionClass = 'correct-answer';
+                        }
+                        
+                        html += `
+                            <div class="option">
+                                <span class="${optionClass}">${question.type === "BS" ? option : String.fromCharCode(65 + optIndex) + '. ' + option}</span>
+                                ${userAnswer === optIndex && !isCorrect ? '<span style="color: var(--accent); margin-left: 10px;">(Jawaban Anda)</span>' : ''}
+                            </div>
+                        `;
+                    });
+                } else if (question.type === "MCMA") {
+                    question.options.forEach((option, optIndex) => {
+                        let optionClass = '';
+                        if (question.correctAnswer.includes(optIndex)) {
+                            optionClass = 'correct-answer';
+                        }
+                        
+                        const isUserSelected = userAnswer && userAnswer.includes(optIndex);
+                        
+                        html += `
+                            <div class="option mcma-option">
+                                <span class="${optionClass}">${String.fromCharCode(65 + optIndex) + '. ' + option}</span>
+                                ${isUserSelected && !question.correctAnswer.includes(optIndex) ? '<span style="color: var(--accent); margin-left: 10px;">(Jawaban Anda)</span>' : ''}
+                            </div>
+                        `;
+                    });
+                }
+                
+                html += `
+                        </div>
+                        <div class="explanation">
+                            <strong>Pembahasan:</strong> ${question.explanation}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            document.getElementById('explanation-content').innerHTML = html;
+            document.getElementById('explanation').style.display = 'block';
+            
+            // Scroll ke pembahasan
+            document.getElementById('explanation').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Event listener saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', () => {
+            // Event listener untuk tombol mulai
+            document.getElementById('start-btn').addEventListener('click', startTest);
+            
+            // Event listener untuk tombol navigasi
+            document.getElementById('prev-btn').addEventListener('click', () => {
+                if (currentQuestion > 0) {
+                    currentQuestion--;
+                    displayQuestion();
+                }
+            });
+            
+            document.getElementById('next-btn').addEventListener('click', () => {
+                if (currentQuestion < questions.length - 1) {
+                    currentQuestion++;
+                    displayQuestion();
+                }
+            });
+            
+            document.getElementById('submit-btn').addEventListener('click', submitQuiz);
+            
+            document.getElementById('show-explanation').addEventListener('click', showExplanation);
+            
+            // Tampilkan jumlah soal
+            document.getElementById('total-questions').textContent = questions.length;
+        });
+    </script>
+</body>
+</html>
